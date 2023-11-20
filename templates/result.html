@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Classification Results</title>
+</head>
+<body>
+    <h1>Classification Results</h1>
+    <p>Accuracy: {{ accuracy }}</p>
+    <p>Precision: {{ precision }}</p>
+    <p>Recall: {{ recall }}</p>
+    <p>F1-Score: {{ f1 }}</p>
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Confusion Matrix">
+</body>
+</html>

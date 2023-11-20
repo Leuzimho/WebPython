@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Classification App</title>
+    <script>
+        function showHideFields() {
+            var classifier = document.getElementById("classifier").value;
+
+    
+            document.getElementById("k_neighbors_field").style.display = "none";
+            document.getElementById("svm_c_field").style.display = "none";
+            document.getElementById("mlp_hidden_layer_sizes_field").style.display = "none";
+
+            if (classifier === "KNN") {
+                document.getElementById("k_neighbors_field").style.display = "block";
+            } else if (classifier === "SVM") {
+                document.getElementById("svm_c_field").style.display = "block";
+            } else if (classifier === "MLP") {
+                document.getElementById("mlp_hidden_layer_sizes_field").style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Machine Learning Classification App</h1>
+    <form action="/train_test" method="post" onsubmit="showHideFields()">
+        <label for="classifier">Select Classifier:</label>
+        <select name="classifier" id="classifier" onchange="showHideFields()">
+            <option value="KNN">KNN</option>
+            <option value="SVM">SVM</option>
+            <option value="MLP">MLP</option>
+            <option value="DT">Decision Tree</option>
+            <option value="RF">Random Forest</option>
+        </select>
+        <br><br>
+
+        <!-- campo para o número de vizinhos (apenas para o KNN) -->
+        <div id="k_neighbors_field" style="display: none;">
+            <label for="k_neighbors">Number of Neighbors (KNN):</label>
+            <input type="text" name="k_neighbors" id="k_neighbors">
+            <br><br>
+        </div>
+
+        <!-- campo para o valor C (apenas para o SVM) -->
+        <div id="svm_c_field" style="display: none;">
+            <label for="svm_c">SVM C Value:</label>
+            <input type="text" name="svm_c" id="svm_c">
+            <br><br>
+        </div>
+
+        <!-- campo para o tamanho da camada oculta (apenas para o MLP) -->
+        <div id="mlp_hidden_layer_sizes_field" style="display: none;">
+            <label for="mlp_hidden_layer_sizes">MLP Hidden Layer Sizes:</label>
+            <input type="text" name="mlp_hidden_layer_sizes" id="mlp_hidden_layer_sizes" placeholder="e.g., 100,50">
+            <br><br>
+        </div>
+
+        <input type="submit" value="Train and Test">
+    </form>
+</body>
+</html>
