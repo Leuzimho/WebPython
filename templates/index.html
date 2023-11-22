@@ -5,60 +5,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ML Classification App</title>
-    <script>
-        function showHideFields() {
-            var classifier = document.getElementById("classifier").value;
-
-    
-            document.getElementById("k_neighbors_field").style.display = "none";
-            document.getElementById("svm_c_field").style.display = "none";
-            document.getElementById("mlp_hidden_layer_sizes_field").style.display = "none";
-
-            if (classifier === "KNN") {
-                document.getElementById("k_neighbors_field").style.display = "block";
-            } else if (classifier === "SVM") {
-                document.getElementById("svm_c_field").style.display = "block";
-            } else if (classifier === "MLP") {
-                document.getElementById("mlp_hidden_layer_sizes_field").style.display = "block";
-            }
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            text-align: center;
+            padding: 20px;
         }
-    </script>
+
+        h1 {
+            color: #4d4d4d;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        select,
+        input[type="text"],
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1>Machine Learning Classification App</h1>
-    <form action="/train_test" method="post" onsubmit="showHideFields()">
-        <label for="classifier">Select Classifier:</label>
-        <select name="classifier" id="classifier" onchange="showHideFields()">
+    <h1>Aula Machine Learning</h1>
+    <form action="/train_test" method="post">
+        <label for="classifier">Selecione o classificador:</label>
+        <select name="classifier" id="classifier">
             <option value="KNN">KNN</option>
             <option value="SVM">SVM</option>
             <option value="MLP">MLP</option>
-            <option value="DT">Decision Tree</option>
             <option value="RF">Random Forest</option>
         </select>
-        <br><br>
 
-        <!-- campo para o número de vizinhos (apenas para o KNN) -->
-        <div id="k_neighbors_field" style="display: none;">
-            <label for="k_neighbors">Number of Neighbors (KNN):</label>
-            <input type="text" name="k_neighbors" id="k_neighbors">
-            <br><br>
-        </div>
+        <label for="param1">Parâmetro 1:</label>
+        <input type="number" name="param1" id="param1">
 
-        <!-- campo para o valor C (apenas para o SVM) -->
-        <div id="svm_c_field" style="display: none;">
-            <label for="svm_c">SVM C Value:</label>
-            <input type="text" name="svm_c" id="svm_c">
-            <br><br>
-        </div>
+        <label for="param2">Parâmetro 2:</label>
+        <input type="text" name="param2" id="param2">
 
-        <!-- campo para o tamanho da camada oculta (apenas para o MLP) -->
-        <div id="mlp_hidden_layer_sizes_field" style="display: none;">
-            <label for="mlp_hidden_layer_sizes">MLP Hidden Layer Sizes:</label>
-            <input type="text" name="mlp_hidden_layer_sizes" id="mlp_hidden_layer_sizes" placeholder="e.g., 100,50">
-            <br><br>
-        </div>
-
-        <input type="submit" value="Train and Test">
+        <label for="param3">Parâmetro 3:</label>
+        <input type="text" name="param3" id="param3">
+        <input type="submit" value="Treinar e testar">
     </form>
 </body>
 </html>

@@ -23,35 +23,34 @@ def train_test():
 
     selected_columns = ['weight', 'mpg']
     X = df[selected_columns]
-    y = df['cylinders']  
+    y = df['cylinders']
 
-    # divisao dos dados em treino e teste
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-
 
     classifier_name = request.form['classifier']
     if classifier_name == 'KNN':
-        # número de vizinhos do formulário ou um valor padrão (5)
-        k_neighbors = int(request.form.get('k_neighbors', 5))
-        classifier = KNeighborsClassifier(n_neighbors=k_neighbors)
+        k_neighbors = int(request.form.get('param1'))
+        p = float(request.form.get('param2'))
+        leaf_size1 = int(request.form.get('param3'))
+        classifier = KNeighborsClassifier(n_neighbors=k_neighbors, p=p, leaf_size=leaf_size1)
     elif classifier_name == 'SVM':
-        # valor C do formulário ou um valor padrão (1.0)
-        svm_c = float(request.form.get('svm_c', 1.0))
-        classifier = SVC(C=svm_c, kernel='linear')
+        C_value = float(request.form.get('param1'))
+        coef0 = float(request.form.get('param2'))
+        degree_value = int(request.form.get('param3'))
+        classifier = SVC(C=C_value, coef0=coef0, degree=degree_value)
     elif classifier_name == 'MLP':
-        # tamanho da camada oculta do formulário ou um valor padrão (100,)
-        mlp_hidden_layer_sizes = tuple(map(int, request.form.get('mlp_hidden_layer_sizes', '100').split(',')))
-        classifier = MLPClassifier(hidden_layer_sizes=mlp_hidden_layer_sizes, max_iter=1000)
-    elif classifier_name == 'DT':
-        classifier = DecisionTreeClassifier()
+        hidden_layer_sizes = tuple(map(int, request.form.get('param1', '100').split(',')))
+        alpha = float(request.form.get('param2'))
+        max_iter_value = int(request.form.get('param3'))
+        classifier = MLPClassifier(hidden_layer_sizes=hidden_layer_sizes, alpha=alpha, max_iter=max_iter_value)
+
     elif classifier_name == 'RF':
-        classifier = RandomForestClassifier(n_estimators=100)
+        n_estimators_value = int(request.form.get('param1'))
+        min_samples_split = int(request.form.get('param2'))
+        max_depth_value = int(request.form.get('param3'))
+        classifier = RandomForestClassifier(n_estimators=n_estimators_value, min_samples_split=min_samples_split, max_depth=max_depth_value)
 
-    # treinamento do modelo
     classifier.fit(X_train, y_train)
-
-
     y_pred = classifier.predict(X_test)
 
     accuracy = accuracy_score(y_test, y_pred)
@@ -59,7 +58,6 @@ def train_test():
     recall = recall_score(y_test, y_pred, average='macro')
     f1 = f1_score(y_test, y_pred, average='macro')
 
-    # matriz de confusão
     conf_matrix = confusion_matrix(y_test, y_pred)
     plt.figure(figsize=(8, 6))
     plt.imshow(conf_matrix, interpolation='nearest', cmap=plt.cm.Blues)
@@ -79,7 +77,6 @@ def train_test():
             plt.text(j, i, str(conf_matrix[i, j]), ha='center', va='center', color='white' if conf_matrix[i, j] > conf_matrix.max() / 2 else 'black')
 
     plt.tight_layout()
-
 
     img = BytesIO()
     plt.savefig(img, format='png')
